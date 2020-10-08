@@ -227,8 +227,8 @@ func (client *Client) MyCPFromLocalToRemote(srcPath, dstPath string, onlyModifie
 			log.Printf("Read fail=>%v", err)
 			return
 		}
-		log.Printf("file data=>#%v#", data[:n])
-		log.Printf("file data=>%#v", data[:n])
+		//log.Printf("file data=>#%v#", data[:n])
+		//log.Printf("file data=>%#v", data[:n])
 		_ = inputFile.Close()
 		if n >= maxSize {
 			log.Printf("file larger than %d Bytes, filename=>%s", maxSize, srcPath)
