@@ -230,7 +230,7 @@ func MyCPFromRemoteToLocal(myCPPackage *mycpproto.MyCPPackage) {
 			return
 		}
 		myCPPackage.Data = myCPPackage.Data[:n]
-		log.Printf("total read: %d Bytes", n)
+		//log.Printf("total read: %d Bytes", n)
 		myCPPackage.Status = mycpproto.MyCPPackageStatusSucc
 		return
 	} else {
@@ -349,7 +349,7 @@ func MyCPFromLocalToRemote(myCPPackage *mycpproto.MyCPPackage) {
 				myCPPackage.Status = mycpproto.MyCPPackageStatusFail
 				return
 			}
-			log.Printf("total write %d Bytes", n)
+			//log.Printf("total write %d Bytes", n)
 			_ = n
 			myCPPackage.Status = mycpproto.MyCPPackageStatusSucc
 		}

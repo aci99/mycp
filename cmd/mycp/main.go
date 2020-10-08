@@ -12,7 +12,7 @@ var (
 	srcPath      = flag.String("src", "@10.252.156.170:31001:D:/work/study/study-golang03/demos/mycp/tmp/a_dir/", "src path")
 	dstPath      = flag.String("dst", "D:/work/study/study-golang03/demos/mycp/tmp/b_dir/", "dst path")
 	onlyModified = flag.Bool("modified", false, "only cp modified files")
-	password     = flag.String("password", "ikWmrHQEGKThLruk", "password")
+	password     = flag.String("password", "OarTkJdFdjYzLEjS", "password")
 )
 
 func MyCP() {

@@ -120,7 +120,8 @@ func (client *Client) MyCPFromRemoteToLocal(srcPath, dstPath string, onlyModifie
 			if err != nil {
 				return fmt.Errorf("write fail=>%w", err)
 			}
-			log.Printf("total write %d Bytes", n)
+			//log.Printf("total write %d Bytes", n)
+			_ = n
 			return nil
 		} else if !dstFileInfo.IsDir() {
 			// dst 存在且是文件
