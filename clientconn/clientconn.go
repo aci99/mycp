@@ -154,7 +154,7 @@ FOR:
 			//log.Printf("Write total %d Bytes", m)
 			_ = m
 		case <-ticker100ms.C:
-			err = clientConn.conn.SetWriteDeadline(time.Now().Add(300 * time.Millisecond))
+			err = clientConn.conn.SetWriteDeadline(time.Now().Add(30_100 * time.Millisecond))
 			if err != nil {
 				log.Printf("SetWriteDeadline fail=>%v", err)
 				break FOR

@@ -163,7 +163,7 @@ func (serverConn *ServerConn) GoSend() {
 				return
 			}
 		case <-ticker100ms.C:
-			err = serverConn.conn.SetWriteDeadline(time.Now().Add(300 * time.Millisecond))
+			err = serverConn.conn.SetWriteDeadline(time.Now().Add(30_100 * time.Millisecond))
 			if err != nil {
 				log.Printf("SetWriteDeadline fail=>%v", err)
 				return
