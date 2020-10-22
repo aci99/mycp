@@ -7,7 +7,8 @@
 
 1. 支持只传输自上次传输过后修改过的文件.
 2. 支持传输文件夹.
-3. 支持认证 (authentication), 密文形式传输.
+3. 使用 `@R` 表示最近一次传输时所使用的远端 ip 和 port
+4. 支持认证 (authentication), 密文形式传输.
 
 # 注意
 
@@ -59,7 +60,7 @@ mycp --src=src/path --dst=@ip:port:dst/path --password=Lu8EGLnS2flCK6fA --modifi
 2. 如果 src/path 对应的是路径, 则会传输这个路径并递归地传输其包含的所有子路径以及文件.
 3. 如果 dst/path 需要的路径不存在, 则会创建.
 4. windows 路径一律使用 '/', 比如 `mycp --src=@192.168.1.2:D:/path/to/file --dst=...`
-5. `--modified=true` 表示只拷贝自上次 mycp 后修改过的文件. 具体规则是, 每次 mycp 成功执行后, 会持久化一个 `--src=[@ip:port:]path` => `这次 mycp 的开始时间` 键值对, 当下次再 mycp 相同的源路径, 那么只会传输该源路径下修改时间晚于之前持久化的 `这次 mycp 的开始时间` 的文件, 需要传输的文件夹不受这个时间限制.
+5. `--modified=true` 表示只拷贝 "这个时刻" 后修改过的文件 ("这个时刻"=上次 mycp 开始时刻-5min). 具体规则是, 每次 mycp 成功执行后, 会持久化一个 `--src=[@ip:port:]path` => `这次 mycp 的开始时间` 键值对, 当下次再 mycp 相同的源路径 (ip 或者 port 不同算不同的路径), 那么只会传输该源路径下修改时间晚于之前持久化的 `这次 mycp 的开始时间`-5min 的文件, 需要传输的文件夹不受这个时间限制. 5min 这个参数可以通过 mycp/mycpproto/mycpproto.go 中的 `TimeAdvanced` 参数修改.
 6. 以 `mycp --src=srcpath --dst=dstpath ...` 为例
    1. 如果 srcpath 是文件
       1. 如果 dstpath 存在且是文件, 则文件 srcpath 覆盖文件 dstpath
@@ -112,4 +113,8 @@ mcp src/path @ip:port:dst/path -m
 ## mycp 所需信息的持久化
 
 最近一次的 remote host 以及众多的键值对 `--src=[@ip:port:]path` => `这次 mycp 的开始时间`, 是持久化在可执行文件 mycp 所在路径下的 *mycp_info.txt* 文件里, 其内容以 json 字符串的形式存储. 该文件只增不减, 如果该文件所包含的字节数超过 100MB, 再执行 mycp 时会失败. 如果出现这种情况, 删除该文件即可正常使用.
+
+## 上次 mycp 时间
+
+上次 mycp 时间是采用的客户端所在机器的时间. 而服务端所在机器上的文件的修改时间是采用的服务端机器的时间, 两者可能不同. 所以对于 --modified 选项, 采用了传输修改时间晚于 (上次 mycp 开始时间-5min) 的文件, 通过 5min 的间隔来简单掩盖客户端和服务端的时间不一致.
 

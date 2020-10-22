@@ -208,7 +208,7 @@ func (client *Client) MyCPFromLocalToRemote(srcPath, dstPath string, onlyModifie
 	if !srcPathInfo.IsDir() {
 		// 如果 src 是文件
 		if onlyModified {
-			if srcPathInfo.ModTime().Before(lastMyCPTime) {
+			if srcPathInfo.ModTime().Before(lastMyCPTime.Add(-mycpproto.TimeAdvanced)) {
 				log.Printf("no need to cp because no modification")
 				return
 			}

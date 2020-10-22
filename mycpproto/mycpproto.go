@@ -39,3 +39,5 @@ const (
 	DirectionRemoteIsSrc DirectionT = iota
 	DirectionRemoteIsDst
 )
+
+var TimeAdvanced = 5 * time.Minute // 只传输这个时间之后修改过的文件. 这个时间 = 上次 mycp 时间 - TimeAdvanced

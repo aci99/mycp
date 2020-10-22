@@ -199,7 +199,7 @@ func MyCPFromRemoteToLocal(myCPPackage *mycpproto.MyCPPackage) {
 		// 如果 src 是 file, 则 copy 内容
 
 		if myCPPackage.OnlyModified {
-			if srcFileInfo.ModTime().Before(myCPPackage.LastMyCPTime) {
+			if srcFileInfo.ModTime().Before(myCPPackage.LastMyCPTime.Add(-mycpproto.TimeAdvanced)) {
 				log.Printf("no need to cp because no modification")
 				myCPPackage.Status = mycpproto.MyCPPackageStatusNoNeedToCP
 				return
@@ -244,7 +244,7 @@ func MyCPFromRemoteToLocal(myCPPackage *mycpproto.MyCPPackage) {
 			return
 		}
 		for _, info := range fileInfos {
-			if !info.IsDir() && myCPPackage.OnlyModified && info.ModTime().Before(myCPPackage.LastMyCPTime) {
+			if !info.IsDir() && myCPPackage.OnlyModified && info.ModTime().Before(myCPPackage.LastMyCPTime.Add(-mycpproto.TimeAdvanced)) {
 				continue
 			}
 			//if strings.HasPrefix(info.Name(), ".") {
